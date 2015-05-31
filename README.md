@@ -32,7 +32,7 @@ Default labels:
 
 ## Usage
 
-Just specify Ocotkit to use this faraday middleware by either:
+Just specify Octokit to use this faraday middleware by either:
 
 ```
 require 'faraday_middleware/octokit/prometheus'
@@ -52,7 +52,7 @@ require 'faraday_middleware/octokit/prometheus'
 Octokit.middleware.use FaradayMiddleware::Octokit::Prometheus::Collector
 ```
 
-After the setup, you can use Octokit methods as usual and the middleware collects metrics for Prometheus.
+After the setup, you can use Octokit methods as usual, then the middleware collects metrics for Prometheus.
 
 
 ### Additional Labels
