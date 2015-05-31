@@ -1,5 +1,7 @@
 # FaradayMiddleware::Octokit::Prometheus
 
+[![Build Status](https://travis-ci.org/kazegusuri/faraday_middleware-octokit-prometheus.svg?branch=master)](https://travis-ci.org/kazegusuri/faraday_middleware-octokit-prometheus)  
+
 Faraday middleware for octokit to collect metrics for [Prometheus](http://prometheus.io/).
 
 ## Installation
