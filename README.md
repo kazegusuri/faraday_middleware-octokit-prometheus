@@ -1,8 +1,6 @@
 # FaradayMiddleware::Octokit::Prometheus
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/faraday_middleware/octokit/prometheus`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Faraday middleware for octokit to collect metrics for [Prometheus](http://prometheus.io/).
 
 ## Installation
 
@@ -20,19 +18,57 @@ Or install it yourself as:
 
     $ gem install faraday_middleware-octokit-prometheus
 
+## Metrics
+
+Current collecting metrics:
+
+- `github_request_total`: The total number of GitHub API requests per label
+- `github_request_durations_total_microseconds`: The total amount of time spent requesting GitHub (microseconds) per label.
+
+Default labels:
+
+- `op`: GitHub API name which corresponds with Octokit method name
+- `status`: response status
+
 ## Usage
 
-TODO: Write usage instructions here
+Just specify Ocotkit to use this faraday middleware by either:
 
-## Development
+```
+require 'faraday_middleware/octokit/prometheus'
+stack = Faraday::RackBuilder.new do |builder|
+  builder.response :logger
+  builder.response :octokit_prometheus_collector
+  builder.use Octokit::Response::RaiseError
+  builder.adapter Faraday.default_adapter
+end
+Octokit.middleware = stack
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Or by using `Octokit.middleware.use`:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+require 'faraday_middleware/octokit/prometheus'
+Octokit.middleware.use FaradayMiddleware::Octokit::Prometheus::Collector
+```
+
+After the setup, you can use Octokit methods as usual and the middleware collects metrics for Prometheus.
+
+
+### Additional Labels
+
+You can specify additional labels for each metrics.
+
+```
+FaradayMiddleware::Octokit::Prometheus.labels = {
+  hostname: `hostname`.chomp,
+  pid: Process.uid,
+}
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/faraday_middleware-octokit-prometheus. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kazegusuri/faraday_middleware-octokit-prometheus. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License

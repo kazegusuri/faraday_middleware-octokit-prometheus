@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Masahiro Sano"]
   spec.email         = ["sabottenda@gmail.com"]
 
-  spec.summary       = %q{faraday middleware for octokit to collect metrics for Prometheus.}
-  spec.description   = %q{faraday middleware for octokit to collect metrics for Prometheus.}
+  spec.summary       = %q{Faraday middleware for octokit to collect metrics for Prometheus.}
+  spec.description   = %q{Faraday middleware for octokit to collect metrics for Prometheus.}
   spec.homepage      = "https://github.com/kazegusuri/faraday_middleware-octokit-prometheus"
   spec.license       = "MIT"
 
